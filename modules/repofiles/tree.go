@@ -83,6 +83,7 @@ func GetTreeBySHA(repo *models.Repository, sha string, page, perPage int, recurs
 		tree.Entries[e].Type = entries[e].Type()
 		tree.Entries[e].Size = entries[e].Size()
 		tree.Entries[e].SHA = entries[e].ID.String()
+		tree.Entries[e].ModTime = entries[e].ModTime()
 
 		if entries[e].IsDir() {
 			copy(treeURL[copyPos:], entries[e].ID.String())

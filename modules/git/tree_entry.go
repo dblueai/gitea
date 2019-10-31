@@ -9,6 +9,8 @@ import (
 	"io"
 	"sort"
 	"strings"
+	"os"
+	"time"
 
 	"gopkg.in/src-d/go-git.v4/plumbing"
 	"gopkg.in/src-d/go-git.v4/plumbing/filemode"
@@ -86,6 +88,17 @@ func (te *TreeEntry) Size() int64 {
 	te.sized = true
 	te.size = file.Size
 	return te.size
+}
+
+// Stat of the entry
+func (te *TreeEntry) ModTime() (string) {
+	fileInfo, err := os.Stat(te.gogitTreeEntry.Name)
+
+	if err != nil {
+		return time.Now().Format(time.RFC3339)
+	}
+
+	return fileInfo.ModTime().Format(time.RFC3339)
 }
 
 // IsSubModule if the entry is a sub module
