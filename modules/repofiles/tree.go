@@ -6,6 +6,7 @@ package repofiles
 
 import (
 	"fmt"
+	"time"
 
 	"code.gitea.io/gitea/models"
 	"code.gitea.io/gitea/modules/git"
@@ -78,12 +79,14 @@ func GetTreeBySHA(repo *models.Repository, sha string, page, perPage int, recurs
 	for e := rangeStart; e < rangeEnd; e++ {
 		i := e - rangeStart
 
+		commit, _ := gitRepo.GetCommit(sha)
+
 		tree.Entries[e].Path = entries[e].Name()
 		tree.Entries[e].Mode = fmt.Sprintf("%06o", entries[e].Mode())
 		tree.Entries[e].Type = entries[e].Type()
 		tree.Entries[e].Size = entries[e].Size()
 		tree.Entries[e].SHA = entries[e].ID.String()
-		tree.Entries[e].ModTime = entries[e].ModTime()
+		tree.Entries[e].ModTime = commit.Author.When.Format(time.RFC3339)
 
 		if entries[e].IsDir() {
 			copy(treeURL[copyPos:], entries[e].ID.String())
