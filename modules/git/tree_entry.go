@@ -95,7 +95,7 @@ func (te *TreeEntry) ModTime() (string) {
 	fileInfo, err := os.Stat(te.gogitTreeEntry.Name)
 
 	if err != nil {
-		return time.Now().Format(time.RFC3339)
+		return ""
 	}
 
 	return fileInfo.ModTime().Format(time.RFC3339)
