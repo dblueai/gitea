@@ -28,7 +28,6 @@ func TestGetTreeBySHA(t *testing.T) {
 	ctx.SetParams(":sha", sha)
 
 	tree, err := GetTreeBySHA(ctx.Repo.Repository, ctx.Params(":sha"), page, perPage, true)
-	t.Log(tree)
 	assert.Nil(t, err)
 	expectedTree := &api.GitTreeResponse{
 		SHA: "65f1bf27bc3bf70f64657658635e66094edbcb4d",
@@ -41,7 +40,7 @@ func TestGetTreeBySHA(t *testing.T) {
 				Size: 30,
 				SHA:  "4b4851ad51df6a7d9f25c979345979eaeb5b349f",
 				URL:  "https://try.gitea.io/api/v1/repos/user2/repo1/git/blobs/4b4851ad51df6a7d9f25c979345979eaeb5b349f",
-				ModTime: "",
+				ModTime: "2017-03-19T16:47:59-04:00",
 			},
 		},
 		Truncated:  false,
