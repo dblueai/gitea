@@ -20,6 +20,7 @@ func GetTreeBySHA(repo *models.Repository, sha string, page, perPage int, recurs
 	if err != nil {
 		return nil, err
 	}
+	defer gitRepo.Close()
 	gitTree, err := gitRepo.GetTree(sha)
 	if err != nil || gitTree == nil {
 		return nil, models.ErrSHANotFound{
@@ -81,12 +82,12 @@ func GetTreeBySHA(repo *models.Repository, sha string, page, perPage int, recurs
 
 		commit, _ := gitRepo.GetCommit(sha)
 
-		tree.Entries[e].Path = entries[e].Name()
-		tree.Entries[e].Mode = fmt.Sprintf("%06o", entries[e].Mode())
-		tree.Entries[e].Type = entries[e].Type()
-		tree.Entries[e].Size = entries[e].Size()
-		tree.Entries[e].SHA = entries[e].ID.String()
-		tree.Entries[e].ModTime = commit.Author.When.Format(time.RFC3339)
+		tree.Entries[i].Path = entries[e].Name()
+		tree.Entries[i].Mode = fmt.Sprintf("%06o", entries[e].Mode())
+		tree.Entries[i].Type = entries[e].Type()
+		tree.Entries[i].Size = entries[e].Size()
+		tree.Entries[i].SHA = entries[e].ID.String()
+		tree.Entries[i].ModTime = commit.Author.When.Format(time.RFC3339)
 
 		if entries[e].IsDir() {
 			copy(treeURL[copyPos:], entries[e].ID.String())
