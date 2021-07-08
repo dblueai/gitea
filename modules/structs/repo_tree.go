@@ -12,6 +12,7 @@ type GitEntry struct {
 	Size int64  `json:"size"`
 	SHA  string `json:"sha"`
 	URL  string `json:"url"`
+	ModTime  string `json:"modified_at"`
 }
 
 // GitTreeResponse returns a git tree

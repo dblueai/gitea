@@ -21,6 +21,8 @@ func TestGetTreeBySHA(t *testing.T) {
 	test.LoadRepoCommit(t, ctx)
 	test.LoadUser(t, ctx, 2)
 	test.LoadGitRepo(t, ctx)
+	defer ctx.Repo.GitRepo.Close()
+
 	sha := ctx.Repo.Repository.DefaultBranch
 	page := 1
 	perPage := 10
@@ -40,6 +42,7 @@ func TestGetTreeBySHA(t *testing.T) {
 				Size: 30,
 				SHA:  "4b4851ad51df6a7d9f25c979345979eaeb5b349f",
 				URL:  "https://try.gitea.io/api/v1/repos/user2/repo1/git/blobs/4b4851ad51df6a7d9f25c979345979eaeb5b349f",
+				ModTime: "2017-03-19T16:47:59-04:00",
 			},
 		},
 		Truncated:  false,
